@@ -7,6 +7,13 @@ const userSchema = mongoose.Schema({
   password: { type: String, required: true }
 });
 
+userSchema
+  .virtual('groups', {
+    ref: 'Group',
+    localField: '_id',
+    foreignField: 'members'
+  });
+  
 //might modularize this
 userSchema
   .virtual('passwordConfirmation')
@@ -23,7 +30,7 @@ userSchema.pre('validate', function passwordCheck(next) {
 
 userSchema.pre('save', function hashPassword(next) {
   if(this.isModified('password')) {
-    this.password = bcrypt.hashsync(this.password, bcrypt.genSaltSync(8));
+    this.password = bcrypt.hashSync(this.password, bcrypt.genSaltSync(8));
   }
   next();
 });

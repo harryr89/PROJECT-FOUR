@@ -21,6 +21,7 @@ function userCreate(req, res, next){
 function userShow(req, res, next){
   User
     .findById(req.params.id)
+    .populate('groups')
     .exec()
     .then((user) => {
       if(!user) return res.notFound();
