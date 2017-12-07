@@ -1,18 +1,20 @@
-import React     from 'react';
-import LoginForm from './LoginForm';
-import Axios     from 'axios';
+import React        from 'react';
+import RegisterForm from './RegisterForm';
+import Axios        from 'axios';
 
 import Auth from '../../lib/Auth';
 
-class Login extends React.Component {
+class Register extends React.Component {
   state = {
     user: {
+      username: '',
       email: '',
-      password: ''
+      password: '',
+      passwordConfirmation: ''
     }
   };
 
-  handleChange = ({ target: { name, value } }) => {
+  handleChange = ({ target: { name, value }}) => {
     const user = Object.assign({}, this.state.user, { [name]: value });
     this.setState({ user });
   }
@@ -21,7 +23,7 @@ class Login extends React.Component {
     e.preventDefault();
 
     Axios
-      .post('/api/login', this.state.user)
+      .post('/api/register', this.state.user)
       .then(res => {
         Auth.setToken(res.data.token);
         this.props.history.push('/');
@@ -31,7 +33,7 @@ class Login extends React.Component {
 
   render() {
     return (
-      <LoginForm
+      <RegisterForm
         user={this.state.user}
         handleChange={this.handleChange}
         handleSubmit={this.handleSubmit}
@@ -40,4 +42,4 @@ class Login extends React.Component {
   }
 }
 
-export default Login;
+export default Register;
