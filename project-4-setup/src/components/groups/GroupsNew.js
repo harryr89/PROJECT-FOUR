@@ -9,9 +9,27 @@ class GroupsNew extends React.Component {
     group: {
       title: '',
       image: '',
-      category: ''
-    }
+      category: '',
+      createdBy: '',
+      members: []
+    },
+    selectedOptions: []
   };
+
+  // componentDidMount(){
+  //   Axios
+  //     .get('api/groups')
+  //     .then(res => {
+  //       this.setState({ members: res.data });
+  //     })
+  //     .catch(err => console.log(err));
+  // }
+  //
+  // handleUser = (selectedOptions) => {
+  //   const users = selectedOptions.map(selectedOption => ({ _id: selectedOption.value, username: selectedOption.label }));
+  //   const group = Object.assign({}, this.state.group, { users });
+  //   this.setState({ group, selectedOptions });
+  // }
 
   handleChange = ({ target: { name, value } }) => {
     const group = Object.assign({}, this.state.group, { [name]: value });
@@ -34,7 +52,10 @@ class GroupsNew extends React.Component {
       <GroupsForm
         handleSubmit={this.handleSubmit}
         handleChange={this.handleChange}
-        food={this.state.group}
+        group={this.state.group}
+        members={this.state.members}
+        handleUser={this.handleUser}
+        selectedOptions={this.state.selectedOptions}
       />
     );
   }

@@ -3,7 +3,6 @@ const User = require('../models/user');
 function userIndex(req, res, next){
 
   //if(req.file) req.body.image = req.file.filename;
-
   User
     .find()
     .exec()
