@@ -4,56 +4,76 @@ import Select from 'react-select';
 
 //import BackButton from '../utility/BackButton';
 
-function GroupsForm({ handleSubmit, handleChange, group, handleUser, members, selectedOptions }) {
+const GroupsForm = ({ handleSubmit, handleChange, group, selectedOptions, handleUser}) => {
   //const usersForSelect = members.map(member => ({ value: member.id, label: member.username }));
-  console.log(members);
+
   return (
     <div className="row">
 
-      <form onSubmit={handleSubmit} className="col-md-6">
+      { group && <form onSubmit={handleSubmit} className="col-md-6">
         <div className="form-group">
-          <label>Title</label>
+          <label htmlFor="name"> Name </label>
           <input
             type="text"
             className="form-control"
-
-
+            id="name"
+            name="name"
             onChange={handleChange}
+            value={group.name}
           />
         </div>
-        
-        <div className="form-group">
-          <label htmlFor="category">Category</label>
-          <select
-            className="form-control"
-            id="category"
-            name="category"
 
+        <div className="form-group">
+          <label htmlFor="theme"> Theme </label>
+          <input
+            type="text"
+            className="form-control"
+            id="theme"
+            name="theme"
             onChange={handleChange}
-          >
-            <option value="" disabled>Please Select</option>
-            <option>1</option>
-            <option>2</option>
-            <option>3</option>
-            <option>4</option>
-          </select>
+            value={group.theme}
+          />
         </div>
+
+        <div className="form-group">
+          <label htmlFor="destination"> Destination </label>
+          <input
+            type="text"
+            className="form-control"
+            id="destination"
+            name="destination"
+            onChange={handleChange}
+            value={group.destination}
+          />
+        </div>
+
+        <div className="form-group">
+          <label htmlFor="date"> Date </label>
+          <input
+            type="text"
+            className="form-control"
+            id="date"
+            name="date"
+            onChange={handleChange}
+            value={group.date}
+          />
+        </div>
+
         <div>
           <button className="save-button">Save</button>
         </div>
-        <div className="form-group">
 
+        <div className="form-group">
           <Select
             multi={true}
             name="form-field-name"
             value={selectedOptions}
             onChange={handleUser}
           />
-
         </div>
-      </form>
+      </form> }
     </div>
   );
-}
+};
 
 export default GroupsForm;

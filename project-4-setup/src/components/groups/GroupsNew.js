@@ -7,29 +7,21 @@ import GroupsForm from './GroupsForm';
 class GroupsNew extends React.Component {
   state = {
     group: {
-      title: '',
-      image: '',
-      category: '',
-      createdBy: '',
-      members: []
-    },
-    selectedOptions: []
-  };
+      name: '',
+      theme: '',
+      destination: '',
+      date: '',
+      members: [],
+      selectedOptions: ''
+    }
+  }
 
-  // componentDidMount(){
-  //   Axios
-  //     .get('api/groups')
-  //     .then(res => {
-  //       this.setState({ members: res.data });
-  //     })
-  //     .catch(err => console.log(err));
-  // }
-  //
-  // handleUser = (selectedOptions) => {
-  //   const users = selectedOptions.map(selectedOption => ({ _id: selectedOption.value, username: selectedOption.label }));
-  //   const group = Object.assign({}, this.state.group, { users });
-  //   this.setState({ group, selectedOptions });
-  // }
+  /* this down to handle user might not be needed */
+  handleUser = (selectedOptions) => {
+    const users = selectedOptions.map(selectedOption => ({ _id: selectedOption.value, username: selectedOption.label }));
+    const group = Object.assign({}, this.state.group, { users });
+    this.setState({ group, selectedOptions });
+  }
 
   handleChange = ({ target: { name, value } }) => {
     const group = Object.assign({}, this.state.group, { [name]: value });
@@ -53,7 +45,7 @@ class GroupsNew extends React.Component {
         handleSubmit={this.handleSubmit}
         handleChange={this.handleChange}
         group={this.state.group}
-        members={this.state.members}
+        members={this.state.group.members}
         handleUser={this.handleUser}
         selectedOptions={this.state.selectedOptions}
       />

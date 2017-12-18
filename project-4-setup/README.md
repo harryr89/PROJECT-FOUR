@@ -57,3 +57,37 @@ className="image-tile col-md-6"
 </div>
 
 members: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User' }],
+
+//GROUPS INDEX Important
+
+<div>
+        <div className="row">
+          <div className="page-banner col-md-12">
+            { Auth.isAuthenticated() && <Link to="/groups/new" className="main-button">
+              <i className="fa fa-plus" aria-hidden="true"></i>Add Group
+            </Link>}
+          </div>
+          {this.state.groups.map(group => {
+            return(
+
+              <div key={group.id} className="image-tile col-md-4 col-sm-6 col-xs-12">
+                <Link to={`/groups/${group.id}`}>
+                  <h3>{ group.name }</h3>
+                </Link>
+              </div>
+            );
+          })}
+        </div>
+      </div>
+
+
+      { !Auth.isAuthenticated() && <Link to="/login" className="standard-button">Login</Link>}
+      {' '}
+      { !Auth.isAuthenticated() && <Link to="/register" className="standard-button">Register</Link>}
+      {' '}
+      { Auth.isAuthenticated() && <a href="#" className="standard-button" onClick={logout}>Logout</a>}
+
+
+
+
+      {group.comments.map(comment => <p key={comment.id}>{comment.content}</p>)}

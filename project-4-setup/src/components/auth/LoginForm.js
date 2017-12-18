@@ -9,7 +9,6 @@ const LoginForm = ({ handleChange, handleSubmit, user }) => {
           name="email"
           placeholder="Email"
           onChange={handleChange}
-
           className="form-control"
         />
       </div>
@@ -19,7 +18,7 @@ const LoginForm = ({ handleChange, handleSubmit, user }) => {
           name="password"
           placeholder="Password"
           onChange={handleChange}
-          
+
           className="form-control"
         />
       </div>

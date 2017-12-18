@@ -11,7 +11,7 @@ import GroupsNew   from '../groups/GroupsNew';
 import GroupsEdit  from '../groups/GroupsEdit';
 import GroupsRegister from '../groups/GroupsRegister';
 
-import ProtectedRoute from './ProtectedRoute';
+// import ProtectedRoute from './ProtectedRoute';
 
 const Routes = () => {
   return (
@@ -20,8 +20,8 @@ const Routes = () => {
       <Route path="/register" component={Register} />
       <Route exact path="/" component={GroupsIndex} />
       <Route path="/groups/register" component={GroupsRegister} />
-      <ProtectedRoute path="/groups/new" component={GroupsNew} />
-      <ProtectedRoute path="/groups/:id/edit" component={GroupsEdit} />
+      <Route path="/groups/new" component={GroupsNew} />
+      <Route path="/groups/:id/edit" component={GroupsEdit} />
       <Route path="/groups/:id" component={GroupsShow} />
     </Switch>
   );

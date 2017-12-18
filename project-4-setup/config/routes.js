@@ -6,7 +6,7 @@ const auth  = require('../controllers/auth');
 
 router.route('/groups')
   .get(groups.index)
-  .post(secureRoute, groups.create);
+  .post(groups.create);
 
 router.route('/groups/:id')
   .get(groups.show)
@@ -32,13 +32,19 @@ router.route('/login')
   .post(auth.login);
 
 router.route('/groups/:id/members')
-  .post(groups.make);
+  .post(secureRoute, groups.requestCreate);
 
 router.route('/groups/:id/members/:memberId')
-  .put(groups.accept);
+  .put(secureRoute, groups.requestAccept);
 
 router.route('/groups/:id/members/:membersId')
-  .delete(groups.decline);
+  .delete(secureRoute, groups.requestReject);
+
+router.route('/groups/:id/comments')
+  .post(secureRoute, groups.createComment);
+  
+router.route('/groups/:id/comments/:commentId')
+  .delete(groups.deleteComment);
 
 router.all('/*', (req, res) => res.notFound());
 

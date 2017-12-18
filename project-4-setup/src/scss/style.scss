@@ -1,0 +1,38 @@
+//
+html{
+  width: 100%;
+}
+
+body{
+  //background-color:
+  width: 100%;
+  .navbar{
+      
+      top: 0;
+      right: 0;
+      width: 100% !important;
+      left: 0;
+      z-index: 20;
+  background-color: grey;
+  }
+}
+
+.container{
+  width: 100%;
+}
+
+// .card{
+//   border-style: solid;
+//   border-width: 5px;
+//   border-color: yellow;
+//   height: 400px;
+// }
+
+.index-card{
+  height: 35vh;
+}
+
+nav{
+  width: 100vh;
+  position: relative;
+}

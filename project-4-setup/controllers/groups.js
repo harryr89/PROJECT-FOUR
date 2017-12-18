@@ -2,7 +2,7 @@ const Group = require('../models/group');
 
 function groupIndex(req, res, next){
 
-  //if(req.file) req.body.image = req.file.filename;
+  //if(req.group) req.body.image = req.file.filename;
 
   Group
     .find()
@@ -16,6 +16,7 @@ function groupIndex(req, res, next){
 }
 
 function groupCreate(req, res, next){
+  
   req.body.createdBy = req.currentUser;
   req.body.members.push(req.currentUser);
 
@@ -28,6 +29,7 @@ function groupCreate(req, res, next){
 function groupShow(req, res, next){
   Group
     .findById(req.params.id)
+    .populate('members.member comments.createdBy')
     .exec()
     .then((group) => {
       if(!group) return res.notFound();
@@ -64,21 +66,20 @@ function groupDelete(req, res, next){
     .catch(next);
 }
 
-function makeRequest(req, res, next){
+function groupRequestCreate(req, res, next){
   Group
     .findById(req.params.id)
-
     .then( group => {
       group.members.push({ member: req.currentUser });
-      console.log(group);
-      return group.save;
+      console.log(req.currentUser);
+      return group.save();
     })
-    .then( group => res.json(group))
+    .then(group => res.json(group))
     .catch(next);
 }
 
-function acceptRequest(req, res, next){
-  Group.findById(req.prarms.id)
+function groupRequestAccept(req, res, next){
+  Group.findById(req.params.id)
     .then( group => {
       const member = group.members.id( req.params.memberId );
       member.status = 'accepted';
@@ -88,7 +89,7 @@ function acceptRequest(req, res, next){
     .catch(next);
 }
 
-function declineRequest(req, res, next){
+function groupRequestReject(req, res, next){
   Group.findById( req.params.id )
     .then( group => {
       const member = group.members.id( req.params.memberId );
@@ -99,13 +100,52 @@ function declineRequest(req, res, next){
     .catch(next);
 }
 
+function commentsCreate(req, res, next) {
+
+  Group
+    .findById(req.params.id)
+    .exec()
+    .then(group => {
+      if(!group) return res.notFound();
+
+      req.body.createdBy = req.currentUser;
+
+      const comment = group.comments.create(req.body);
+      group.comments.push(comment);
+      return group.save();
+      // return res.status(200).json({ file });
+    })
+    .then(group => Group.populate(group, { path: 'messages.createdBy' }))
+    .then(group => {
+      const comment = group.comments[group.comments.length -1];
+      return res.status(201).json(comment);
+    })
+    .catch(next);
+}
+
+function commentsDelete(req, res, next){
+  Group
+    .findById(req.params.id)
+    .exec()
+    .then(group => {
+      if (!group) return res.notFound();
+      const comment = group.comments.id(req.params.commentId);
+      comment.remove();
+      group.save();
+      return res.status(200).json({message: 'comment was successfully deleted'});
+    })
+    .catch(next);
+}
+
 module.exports = {
   index: groupIndex,
   create: groupCreate,
   show: groupShow,
   update: groupUpdate,
   delete: groupDelete,
-  make: makeRequest,
-  accept: acceptRequest,
-  decline: declineRequest
+  requestCreate: groupRequestCreate,
+  requestAccept: groupRequestAccept,
+  requestReject: groupRequestReject,
+  createComment: commentsCreate,
+  deleteComment: commentsDelete
 };
