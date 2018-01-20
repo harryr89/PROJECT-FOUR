@@ -30,10 +30,10 @@ class App extends React.Component {
   render() {
     return (
       <Router>
-        <div className="container">
+        <div className="containerTwo">
           <div>
             <Navbar />
-            <GroupsForm />
+            
           </div>
           <main>
             <Routes />
